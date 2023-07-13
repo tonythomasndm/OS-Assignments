@@ -1,0 +1,20 @@
+diff -rN linux-5.14.3/arch/x86/entry/syscalls/syscall_64.tbl linux-5.14.3-A2/arch/x86/entry/syscalls/syscall_64.tbl
+371a372
+> 448 common  kernel_2d_memcpy    sys_kernel_2d_memcpy
+diff -rN linux-5.14.3/kernel/sys.c linux-5.14.3-A2/kernel/sys.c
+712a713,727
+> SYSCALL_DEFINE4(kernel_2d_memcpy, float **, src_matrix, float **, dest_matrix, int, row, int, column)
+> {
+> 	int e = 0;
+> 	float sy_matrix[row][column];
+> 	if(__copy_from_user(sy_matrix, src_matrix, row*column*sizeof(float)))
+> 	{
+> 		return -EFAULT;
+> 	}
+> 	if(__copy_to_user(dest_matrix, sy_matrix, row*column*sizeof(float)))
+> 	{
+> 		return -EFAULT;
+> 	}
+> 	return e;
+> }
+> 
